@@ -1,0 +1,29 @@
+# Unreal Engine standard ignores
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.sln
+*.opensdf
+*.sdf
+*.suo
+.vscode/
+.vs/
+
+# User-specific config
+*.user
+*.userprefs
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Optional: auto generated project files (if every dev regenerates them)
+*.xcodeproj
+*.xcworkspace
+
+# Ignore local backups
+*_BuiltData.uasset
