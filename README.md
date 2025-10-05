@@ -67,86 +67,136 @@
 
 ---
 
+## 一、项目文件夹结构说明
+
+打开UE5项目后，在"内容浏览器"里能看到所有文件夹，我们统一按下面的规则整理：
+
+```
+Content（这是根目录，所有东西都放这里面）
+│
+├─ Core/                【核心框架 - 技术组专用】
+│   ├─ GameModes/       → 游戏模式文件
+│   ├─ Controllers/     → 玩家控制器
+│   └─ GameInstance/    → 全局数据管理
+│
+├─ Characters/          【角色相关】
+│   ├─ Player/          → 玩家的模型、动画、材质
+│   └─ Enemies/         → 敌人、Boss的模型、动画、材质
+│
+├─ Systems/             【游戏系统 - 技术组专用】
+│   ├─ Combat/          → 战斗系统
+│   ├─ Inventory/       → 背包装备
+│   ├─ Quest/           → 任务系统
+│   └─ AI/              → 敌人AI
+│
+├─ Levels/              【地图文件】
+│   ├─ Village/         → 村庄地图
+│   ├─ Wilderness/      → 野外地图
+│   └─ Dungeon/         → 地下城地图
+│
+├─ UI/                  【所有界面】
+│   ├─ Core/            → HUD、血条等核心UI
+│   ├─ Menus/           → 主菜单、暂停菜单
+│   └─ Gameplay/        → 任务提示、对话框
+│
+├─ Props/               【场景物品】
+│   ├─ Weapons/         → 武器模型（剑、弓等）
+│   ├─ Items/           → 道具模型（药水瓶、宝箱等）
+│   └─ Environment/     → 环境装饰（树、石头、房子）
+│
+├─ FX/                  【特效】
+│   ├─ Particles/       → 粒子特效（火焰、烟雾等）
+│   └─ Materials/       → 特效用的材质
+│
+└─ Audio/               【音频文件】
+    ├─ BGM/             → 背景音乐
+    └─ SFX/             → 音效（脚步声、攻击音效）
+```
 
 ---
 
-## 一、UE5 项目文件结构建议
+## 二、文件命名规则
 
-约定：所有内容放在 `Content/` 下，使用模块化的 **文件夹 + 前缀** 管理。
+### 美术资源命名
 
-```
-Content/
-│
-├─ Core/                       // 核心框架
-│   ├─ GameModes/              // 游戏模式、规则
-│   ├─ Player/                 // 玩家控制器、角色蓝图
-│   └─ UI/                     // 全局UI（HUD、血条、经验条）
-│
-├─ Characters/                 // 所有角色相关
-│   ├─ Player/                 // 玩家角色、动画蓝图
-│   └─ Enemies/                // 敌人、Boss
-│
-├─ Systems/                    // 系统模块
-│   ├─ Combat/                 // 战斗系统
-│   ├─ Inventory/              // 简化背包、装备
-│   ├─ Quest/                  // 任务触发器、任务数据
-│   └─ AI/                     // AI 控制器、行为树
-│
-├─ Levels/                     // 地图与关卡
-│   ├─ Village/                // 村庄（起点）
-│   ├─ Wilderness/             // 野外
-│   └─ Dungeon/                // 地下城/Boss关
-│
-├─ UI/                         // 界面
-│   ├─ Widgets/                // 小组件（血条、任务提示）
-│   └─ Screens/                // 全屏界面（主菜单、结算）
-│
-├─ Props/                      // 道具与物件
-│   ├─ Weapons/                // 武器
-│   └─ Items/                  // 药品、任务物品
-│
-├─ FX/                         // 特效资源
-│   ├─ Particles/
-│   └─ Materials/
-│
-└─ Audio/                      // 声音资源
-    ├─ BGM/
-    └─ SFX/
-```
+#### 1. 角色模型
+格式：`SM_角色名称_部位`（SM表示Static Mesh静态模型）
+
+**示例：**
+- `SM_Player_Body` - 玩家身体
+- `SM_Enemy_Goblin` - 哥布林敌人
+- `SM_Boss_Dragon` - Boss龙
+
+#### 2. 动画文件
+格式：`ANIM_角色_动作名`
+
+**示例：**
+- `ANIM_Player_Idle` - 玩家待机
+- `ANIM_Player_Attack` - 玩家攻击
+- `ANIM_Enemy_Walk` - 敌人行走
+- `ANIM_Boss_Roar` - Boss咆哮
+
+#### 3. 武器道具
+格式：`SM_类型_名称`
+
+**示例：**
+- `SM_Weapon_Sword` - 剑
+- `SM_Weapon_Bow` - 弓
+- `SM_Item_Potion` - 药水瓶
+- `SM_Prop_Chest` - 宝箱
+
+#### 4. 环境物件
+格式：`SM_Env_名称`
+
+**示例：**
+- `SM_Env_Tree_Oak` - 橡树
+- `SM_Env_Rock_Large` - 大石头
+- `SM_Env_House_Village` - 村庄房子
 
 ---
 
-## 二、蓝图命名规则
+### 音频文件命名
 
-采用 **前缀 + 功能 + 名称** 的统一规则，方便区分类型。
+#### 1. 背景音乐
+格式：`BGM_场景名称`
 
-### 1. 蓝图前缀
+**示例：**
+- `BGM_Village` - 村庄音乐
+- `BGM_Battle` - 战斗音乐
+- `BGM_BossFight` - Boss战音乐
 
-| 类型                   | 前缀   | 示例                              |
-| -------------------- | ---- | ------------------------------- |
-| 角色 (Character)       | BP_  | BP_PlayerCharacter, BP_Boss     |
-| 动画蓝图 (AnimBlueprint) | ABP_ | ABP_Player, ABP_Enemy           |
-| 控制器 (Controller)     | PC_  | PC_Player, PC_EnemyAI           |
-| 游戏模式 (GameMode)      | GM_  | GM_Main                         |
-| 游戏实例 (GameInstance)  | GI_  | GI_Project                      |
-| HUD / UI             | UI_  | UI_HUD, UI_QuestTracker         |
-| 小组件 (Widget)         | WBP_ | WBP_HealthBar, WBP_Inventory    |
-| 行为树 (Behavior Tree)  | BT_  | BT_EnemyMelee                   |
-| 黑板 (Blackboard)      | BB_  | BB_EnemyMelee                   |
-| 道具 (Item)            | BP_  | BP_Weapon_Sword, BP_Item_Potion |
-| 任务 (Quest)           | Q_   | Q_MainVillage, Q_DungeonBoss    |
-| 特效 (Particle)        | P_   | P_SwordSlash, P_Heal            |
+#### 2. 音效
+格式：`SFX_类型_名称`
 
-### 2. 命名规则说明
+**示例：**
+- `SFX_Player_Footstep` - 脚步声
+- `SFX_Attack_Sword` - 剑攻击音效
+- `SFX_UI_Click` - UI点击音效
+- `SFX_Enemy_Hit` - 敌人受伤音效
 
-- **玩家角色**：`BP_PlayerCharacter`
-    
-- **敌人**：`BP_Enemy_Goblin`, `BP_Boss_Dragon`
-    
-- **AI 控制器**：`PC_EnemyMelee`
-    
-- **UI 界面**：`UI_HUD`, `WBP_QuestLog`
-    
-- **任务**：`Q_MainVillageDefense`, `Q_DungeonClear`
-    
-- **关卡**：`LV_Village`, `LV_DungeonBoss`
+---
+
+### UI界面命名
+
+格式：`UI_界面名称` 或 `Icon_图标名称`
+
+**示例：**
+- `UI_MainMenu` - 主菜单界面
+- `UI_HealthBar` - 血条
+- `UI_Inventory` - 背包界面
+- `Icon_Sword` - 剑的图标
+- `Icon_Potion` - 药水图标
+
+---
+
+### ✨ 特效命名
+
+格式：`FX_效果名称` 或 `P_效果名称`（P代表Particle粒子）
+
+**示例：**
+- `FX_SwordSlash` - 剑光特效
+- `P_HealEffect` - 治疗特效
+- `P_Explosion` - 爆炸特效
+- `FX_LevelUp` - 升级特效
+
+---
